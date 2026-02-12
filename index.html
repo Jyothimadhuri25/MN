@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💚</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  background: linear-gradient(to bottom, #d4edda, #ffffff);
+  position: relative;
+}
+
+/* Glowing center date/initials */
+.bg-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  color: #198754;
+  text-shadow: 0 0 15px #198754, 0 0 30px #198754, 0 0 45px #198754;
+  z-index: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0.2;
+}
+
+/* Center content */
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  top: 25%;
+}
+
+h1 {
+  color: #198754;
+  font-size: 2em;
+}
+
+button {
+  padding: 10px 25px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #198754;
+  color: white;
+}
+
+#yesBtn:hover {
+  background: #146c43;
+}
+
+#noBtn {
+  background: gray;
+  color: white;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 22px;
+  color: #198754;
+}
+
+/* Floating hearts background */
+.bg-heart {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.1;
+  font-size: 20px;
+}
+
+/* Main falling hearts */
+.heart {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  transform-origin: center;
+}
+</style>
+</head>
+<body>
+
+<!-- Glowing background text -->
+<div class="bg-glow">01-09-2016 MN</div>
+
+<div class="content">
+  <h1>Will You Be My Valentine Forever NANI? 💚</h1>
+  <button id="yesBtn" onclick="sayYes()">Yes 💚</button>
+  <button id="noBtn">No 🤍</button>
+  <p id="message"></p>
+</div>
+
+<script>
+// Yes button message (using backticks for multiline)
+function sayYes() {
+  document.getElementById("message").innerHTML = `
+Ok! I love you,
+Don't be lazy and postponing the things and telling after marriage.
+I am not liking it nowadays.
+Love means effort matters, nothing will work without efforts.
+Everything is now blurry for me: no efforts, no care, no trust, no respect, no value.
+Nothing. YOU are trying to convince MY parents.
+YOU are not putting efforts and trust also you lost from me.
+I am feeling empty inside, NO FEELING IN LOVE.
+
+IF YOU BE MY VALENTINE,
+PLEASE FIX EVERYTHING ❤️
+`;
+}
+
+// Background floating hearts
+for (let i = 0; i < 30; i++) {
+  let h = document.createElement("div");
+  h.className = "bg-heart";
+  h.innerHTML = Math.random() > 0.5 ? "💚" : "🤍";
+  
+  h.style.left = Math.random() * window.innerWidth + "px";
+  h.style.top = Math.random() * window.innerHeight + "px";
+  h.speedX = (Math.random() - 0.5) * 0.2;
+  h.speedY = (Math.random() - 0.5) * 0.2;
+  
+  document.body.appendChild(h);
+}
+
+// Main falling hearts
+const totalHearts = 30;
+let hearts = [];
+for (let i = 0; i < totalHearts; i++) {
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = Math.random() > 0.5 ? "💚" : "🤍";
+  
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.fontSize = (15 + Math.random() * 25) + "px";
+  
+  heart.y = Math.random() * window.innerHeight;
+  heart.speed = 1 + Math.random() * 2;
+  heart.rotation = Math.random() * 360;
+  heart.rotationSpeed = (Math.random() - 0.5) * 2;
+  
+  heart.style.top = heart.y + "px";
+  heart.style.transform = `rotate(${heart.rotation}deg)`;
+  
+  document.body.appendChild(heart);
+  hearts.push(heart);
+}
+
+// Animate hearts and background floating hearts
+function animate() {
+  // Main falling hearts
+  hearts.forEach(h => {
+    h.y += h.speed;
+    if (h.y > window.innerHeight) {
+      h.y = -30;
+      h.style.left = Math.random() * window.innerWidth + "px";
+    }
+    h.rotation += h.rotationSpeed;
+    h.style.top = h.y + "px";
+    h.style.transform = `rotate(${h.rotation}deg)`;
+  });
+  
+  // Background floating hearts
+  const bgHearts = document.getElementsByClassName("bg-heart");
+  for (let i = 0; i < bgHearts.length; i++) {
+    let h = bgHearts[i];
+    let left = parseFloat(h.style.left) + h.speedX;
+    let top = parseFloat(h.style.top) + h.speedY;
+    
+    if (left < -20) left = window.innerWidth;
+    if (left > window.innerWidth) left = -20;
+    if (top < -20) top = window.innerHeight;
+    if (top > window.innerHeight) top = -20;
+    
+    h.style.left = left + "px";
+    h.style.top = top + "px";
+  }
+  
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
